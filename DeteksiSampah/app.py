@@ -13,23 +13,23 @@ st.set_page_config(
 )
 
 # ==========================================
-# 2. LOAD MODEL (Hanya sekali agar cepat)
+# 2. LOAD MODEL (Update Path Otomatis)
 # ==========================================
+import os # Tambahkan ini jika belum ada di paling atas
+
 @st.cache_resource
 def load_model():
-    # Pastikan file model ada di satu folder dengan app.py
-    model_path = "model_efficientnetv2_sampah.keras" 
+    # Kode ini akan mencari file model RELATIF terhadap lokasi app.py
+    # Jadi mau ditaruh di folder mana saja, dia akan tetap ketemu!
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(base_dir, "model_efficientnetv2_sampah.keras")
+    
     try:
         model = tf.keras.models.load_model(model_path)
         return model
     except Exception as e:
-        st.error(f"Model tidak ditemukan! Error: {e}")
+        st.error(f"Model tidak ditemukan di: {model_path}.\nError: {e}")
         return None
-
-model = load_model()
-CLASS_NAMES = ['Metal', 'Paper', 'Plastic']
-IMG_SIZE = (224, 224) # Sesuaikan dengan input EfficientNetV2
-
 # ==========================================
 # 3. FUNGSI PREDIKSI
 # ==========================================
@@ -98,4 +98,5 @@ if input_image is not None:
                 st.caption("⚠️ Objek mungkin tidak dikenal atau gambar kurang jelas.")
             
             # Progress Bar
+
             st.progress(int(score * 100))
