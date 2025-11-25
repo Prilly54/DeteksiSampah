@@ -4,6 +4,9 @@ import numpy as np
 from PIL import Image
 import os
 
+# --- KONFIGURASI ---
+CLASS_NAMES = ['Metal', 'Paper', 'Plastic']
+IMG_SIZE = (224, 224)  # <--- INI YANG HILANG/ERROR
 # --- KODE DIAGNOSA (MATA-MATA) ---
 st.write("📂 **Cek File di Server:**")
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -119,5 +122,6 @@ if input_image is not None:
             # Progress Bar
 
             st.progress(int(score * 100))
+
 
 
