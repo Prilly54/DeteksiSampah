@@ -30,6 +30,7 @@ def load_model():
     except Exception as e:
         st.error(f"Model tidak ditemukan di: {model_path}.\nError: {e}")
         return None
+model = load_model()
 # ==========================================
 # 3. FUNGSI PREDIKSI
 # ==========================================
@@ -100,3 +101,4 @@ if input_image is not None:
             # Progress Bar
 
             st.progress(int(score * 100))
+
