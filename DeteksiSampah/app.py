@@ -2,6 +2,25 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import os
+
+# --- KODE DIAGNOSA (MATA-MATA) ---
+st.write("📂 **Cek File di Server:**")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+st.write(f"Lokasi Folder App: `{current_dir}`")
+
+try:
+    files = os.listdir(current_dir)
+    st.write("Daftar File yang ditemukan:", files)
+    
+    target_file = "model_efficientnetv2_sampah.keras"
+    if target_file in files:
+        st.success(f"✅ File '{target_file}' ADA di sini!")
+    else:
+        st.error(f"❌ File '{target_file}' TIDAK DITEMUKAN di daftar file!")
+except Exception as e:
+    st.error(f"Gagal membaca folder: {e}")
+# ----------------------------------
 
 # ==========================================
 # 1. KONFIGURASI HALAMAN
@@ -15,7 +34,6 @@ st.set_page_config(
 # ==========================================
 # 2. LOAD MODEL (Update Path Otomatis)
 # ==========================================
-import os # Tambahkan ini jika belum ada di paling atas
 
 @st.cache_resource
 def load_model():
@@ -101,4 +119,5 @@ if input_image is not None:
             # Progress Bar
 
             st.progress(int(score * 100))
+
 
