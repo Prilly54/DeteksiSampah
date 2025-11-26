@@ -102,11 +102,22 @@ def predict_image(image_input):
 # 4. SIDEBAR (MENU SAMPING)
 # ==========================================
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/4721/4721020.png", width=100)
+    # --- LOGO PERMANEN ---
+    # Menggunakan path dinamis agar gambar selalu ketemu
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    logo_path = os.path.join(base_dir, "logo.png") # Pastikan nama file di GitHub sama!
+    
+    # Cek apakah gambar ada (untuk menghindari error jika lupa upload)
+    if os.path.exists(logo_path):
+        st.image(logo_path, use_column_width=True)
+    else:
+        st.warning("Gambar logo.png belum diupload ke GitHub!")
+    # ---------------------
+
     st.title("Tentang Aplikasi")
     st.info(
         """
-        Aplikasi ini menggunakan Artificial Intelligence (**EfficientNetV2**) 
+        Aplikasi ini menggunakan Machine Learning (**EfficientNetV2**) 
         untuk mengklasifikasikan jenis sampah daur ulang.
         """
     )
@@ -119,13 +130,13 @@ with st.sidebar:
     
     st.write("---")
     confidence_threshold = st.slider("Ambang Batas Keyakinan (%)", 0, 100, 60, 5) / 100
-    st.caption(f"AI akan ragu jika akurasi di bawah {confidence_threshold*100:.0f}%")
+    st.caption(f"sistem akan ragu jika akurasi di bawah {confidence_threshold*100:.0f}%")
 
 # ==========================================
 # 5. HALAMAN UTAMA (MAIN UI)
 # ==========================================
 st.title("♻️ Klasifikasi Sampah Cerdas")
-st.markdown("### Upload foto sampahmu, biarkan AI memilahnya!")
+st.markdown("### Upload foto sampahmu, biarkan sistem memilahnya!")
 st.write("---")
 
 # Tab Input
@@ -175,7 +186,7 @@ if input_image is not None:
                 
                 # Metrik Akurasi
                 st.write("") # Spacer
-                st.metric(label="Tingkat Keyakinan AI", value=f"{score*100:.1f}%", delta="Sangat Yakin")
+                st.metric(label="Tingkat Keyakinan", value=f"{score*100:.1f}%", delta="Sangat Yakin")
                 
                 # Tips Daur Ulang
                 with st.expander("💡 Tips Pengelolaan", expanded=True):
@@ -183,7 +194,7 @@ if input_image is not None:
                     
             else:
                 # Tampilan Jika AI Ragu
-                st.error(f"🤔 Hmm, AI kurang yakin.")
+                st.error(f"🤔 Hmm, sistem kurang yakin.")
                 st.metric(label="Prediksi Terdekat", value=f"{label}?", delta=f"{score*100:.1f}% (Rendah)", delta_color="inverse")
                 st.warning("Objek tidak jelas, terlalu gelap, atau bukan jenis sampah yang dikenali.")
 
@@ -193,6 +204,7 @@ if input_image is not None:
             
         else:
             st.error("Model gagal dimuat. Silakan cek log aplikasi.")
+
 
 
 
