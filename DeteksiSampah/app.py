@@ -8,21 +8,21 @@ import os
 CLASS_NAMES = ['Metal', 'Paper', 'Plastic']
 IMG_SIZE = (224, 224)  # <--- INI YANG HILANG/ERROR
 # --- KODE DIAGNOSA (MATA-MATA) ---
-st.write("📂 **Cek File di Server:**")
-current_dir = os.path.dirname(os.path.abspath(__file__))
-st.write(f"Lokasi Folder App: `{current_dir}`")
+#st.write("📂 **Cek File di Server:**")
+#current_dir = os.path.dirname(os.path.abspath(__file__))
+#st.write(f"Lokasi Folder App: `{current_dir}`")
 
-try:
-    files = os.listdir(current_dir)
-    st.write("Daftar File yang ditemukan:", files)
+#try:
+    #files = os.listdir(current_dir)
+    #st.write("Daftar File yang ditemukan:", files)
     
-    target_file = "model_efficientnetv2_sampah.keras"
-    if target_file in files:
-        st.success(f"✅ File '{target_file}' ADA di sini!")
-    else:
-        st.error(f"❌ File '{target_file}' TIDAK DITEMUKAN di daftar file!")
-except Exception as e:
-    st.error(f"Gagal membaca folder: {e}")
+    #target_file = "model_efficientnetv2_sampah.keras"
+    #if target_file in files:
+        #st.success(f"✅ File '{target_file}' ADA di sini!")
+   # else:
+        #st.error(f"❌ File '{target_file}' TIDAK DITEMUKAN di daftar file!")
+#except Exception as e:
+    #st.error(f"Gagal membaca folder: {e}")
 # ----------------------------------
 
 # ==========================================
@@ -122,6 +122,7 @@ if input_image is not None:
             # Progress Bar
 
             st.progress(int(score * 100))
+
 
 
 
